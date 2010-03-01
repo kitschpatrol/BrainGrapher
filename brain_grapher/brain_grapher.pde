@@ -1,4 +1,5 @@
 import processing.serial.*;
+//import processing.opengl.*;
 
 Serial serial;
 int lf = 10;	// ASCII linefeed
@@ -6,7 +7,8 @@ Channel[] channels = new Channel[11];
 Graph graph;
 
 void setup() {
-	size(800, 600);
+	size(1024, 768);
+	smooth();
 	
 	// Create each channel
 	serial = new Serial(this, Serial.list()[0], 9600);	
@@ -40,7 +42,7 @@ void draw() {
 void serialEvent(Serial p) {
 	String[] incomingValues = split(p.readString(), ',');
 
-	println(incomingValues);
+	//println(incomingValues);
 
 	// Add the data to the logs
 	if (incomingValues.length > 1) {
