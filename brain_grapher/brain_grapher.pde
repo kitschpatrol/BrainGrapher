@@ -1,9 +1,5 @@
-
-
-
 import processing.serial.*;
 import controlP5.*;
-//import processing.opengl.*;
 
 ControlP5 controlP5;
 ControlFont font;
@@ -22,8 +18,6 @@ void setup() {
 	size(1024, 768);
 	smooth();
 	
-	
-	
 	// Set up the knobs and dials
 	controlP5 = new ControlP5(this);
 	controlP5.setColorLabel(color(0));
@@ -33,8 +27,6 @@ void setup() {
 	// controlP5.setColorActive(color(0));	
 	
 	font = new ControlFont(createFont("DIN-MediumAlternate", 12), 12);
-//	  font.setSmooth(true);
-
 	
 	// Create each channel
 	serial = new Serial(this, Serial.list()[0], 9600);	
@@ -126,8 +118,8 @@ void serialEvent(Serial p) {
 				int newValue = Integer.parseInt(incomingValues[i].trim());
 		
 				// Zero the EEG power values if we don't have a signal.
-				// Can be useful to leave them in for development visualization.
-				//if((Integer.parseInt(incomingValues[0]) > 0) && (i > 2)) newValue = 0;
+				// Can be useful to leave them in for development.
+				if((Integer.parseInt(incomingValues[0]) == 0) && (i > 2)) newValue = 0;
 
 				channels[i].addDataPoint(newValue);
 			}
@@ -135,7 +127,6 @@ void serialEvent(Serial p) {
 		
 	}
 }
-
 
 
 // Extend core's Map function to the Long datatype.
