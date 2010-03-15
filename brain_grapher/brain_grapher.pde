@@ -119,7 +119,7 @@ void serialEvent(Serial p) {
 		
 				// Zero the EEG power values if we don't have a signal.
 				// Can be useful to leave them in for development.
-				if((Integer.parseInt(incomingValues[0]) == 0) && (i > 2)) newValue = 0;
+				if((Integer.parseInt(incomingValues[0]) == 200) && (i > 2)) newValue = 0;
 
 				channels[i].addDataPoint(newValue);
 			}
