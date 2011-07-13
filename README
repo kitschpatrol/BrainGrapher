@@ -1,6 +1,53 @@
-// TO DO: monitor local vs. global maxima
-// triangle rendering? why not...
-// Toggle buttons for each channel
-// fix color
-// some kind of graph in background... should it be on black?
-// more graph, less bar?
+# Author: Eric Blue - http://eric-blue.com
+# Project: Neurosky Brainwave Visualizer
+
+[Overview]
+
+After purchasing a Neurosky Mindwave EEG device, I was surprised to see limited apps for
+viewing and visualizing EEG output (brainwave activity for delta, theta, alpha, and beta waves).
+Upon discovering 'How to Hack Toy EEGs' (http://frontiernerds.com/brain-hack), I was inspired
+by the Processing visualization of the Arduino-based serial output.  I wanted to visualize the
+same set of data, however decided to obtain it using Neurosky's published ThinkGear Socket Protocol
+(http://developer.neurosky.com/docs/doku.php?id=thinkgear_connector_tgc).
+
+This fork of kitschpatrol's original code differs in that it doesn't use the Serial interface
+to obtain brainwave data.  Rather, it communicates via the ThinkGear connector using the 
+ThinkGear Socket Protocol and requests data in JSON format.
+
+[MindWave/MindSet Communication]
+
+By default the ThinkGear Connector allows applications to connect over TCP (default 127.0.0.1:13854)
+and request data in either binary or JSON format.  This application will connect to the ThinkGear socket,
+and read the streaming real-time data.  Format:
+
+	{
+	"eSense":
+		{"attention":91,"meditation":41},
+	 "eegPower":
+	 	{"delta":1105014,"theta":211310,
+	 	"lowAlpha":7730,"highAlpha":68568,
+	 	"lowBeta":12949,"highBeta":47455,
+	 	"lowGamma":55770,"highGamma":28247},
+	 "poorSignalLevel":0
+	 }
+	 
+The default IP and port will be used, unless alternatives are specified as environment variables (THINKGEAR_HOST
+and THINKGEAR_PORT).  Port forwarding can be used on the host Windows or Mac computer to allow remote servers to connect.
+To allow other hosts to connect and run Processing, run ReplayTCP (http://www.dlcsistemas.com/html/relay_tcp.html)
+OR, use netcat (windows or mac) to port forward (clients can now connect to port 13855).  
+Ex:  nc -l -p 13855 -c ' nc localhost 13854'
+	 
+[Required Libaries]
+
+The following required libraries are included:
+
+- ControlP5
+- JSON (See http://www.blprnt.com/processing/json.zip)
+
+[Binaries]
+
+Binaries were creating using Processing's app builder (platforms = windows, mac & linux)
+
+[Todo]
+- Re-visit previous todo from original code
+- Add ability to record data (CSV, etc.)
