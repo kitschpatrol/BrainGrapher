@@ -1,0 +1,4 @@
+#!/bin/sh
+
+APPDIR=$(dirname "$0")
+java  -Djava.library.path="$APPDIR" -cp "$APPDIR/lib/brain_grapher.jar:$APPDIR/lib/core.jar:$APPDIR/lib/controlP5.jar:$APPDIR/lib/json.jar:$APPDIR/lib/net.jar" brain_grapher
