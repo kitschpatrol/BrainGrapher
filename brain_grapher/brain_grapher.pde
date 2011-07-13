@@ -1,11 +1,12 @@
-import processing.serial.*;
 import controlP5.*;
+import org.json.*; 
+import processing.net.*;
+
 
 ControlP5 controlP5;
 ControlFont font;
 
-Serial serial;
-int lf = 10;	// ASCII linefeed
+Client myClient; 
 Channel[] channels = new Channel[11];
 Monitor[] monitors = new Monitor[10];
 Graph graph;
@@ -23,14 +24,37 @@ void setup() {
 	controlP5.setColorLabel(color(0));
 	// controlP5.setColorValue(color(0));	
 	controlP5.setColorBackground(color(0));
-	// controlP5.setColorForeground(color(130));
+	//controlP5.setColorForeground(color(130));
 	// controlP5.setColorActive(color(0));	
 	
 	font = new ControlFont(createFont("DIN-MediumAlternate", 12), 12);
 	
-	// Create each channel
-	serial = new Serial(this, Serial.list()[0], 9600);	
-	serial.bufferUntil(10);
+
+        // Connect to ThinkGear socket (default = 127.0.0.1:13854)
+        // By default, Thinkgear only binds to localhost:
+        // To allow other hosts to connect and run Processing from another machine, run ReplayTCP (http://www.dlcsistemas.com/html/relay_tcp.html)
+        // OR, use netcat (windows or mac) to port forard (clients can now connect to port 13855).  Ex:  nc -l -p 13855 -c ' nc localhost 13854'
+        
+        String thinkgearHost = "127.0.0.1";
+        int thinkgearPort = 13854;
+        
+        String envHost = System.getenv("THINKGEAR_HOST");
+        if (envHost != null) {
+          thinkgearHost = envHost;
+        }
+        String envPort = System.getenv("THINKGEAR_PORT");
+        if (envPort != null) {
+           thinkgearPort = Integer.parseInt(envPort);
+        }
+       
+        println("Connecting to host = " + thinkgearHost + ", port = " + thinkgearPort);
+        myClient = new Client(this, thinkgearHost, thinkgearPort);
+        String command = "{\"enableRawOutput\": false, \"format\": \"Json\"}\n";
+        print("Sending command");
+        println (command);
+        myClient.write(command);
+        
+        
 	
 	// Creat the channel objects
 	// yellow to purple and then the space in between, grays for the alphas
@@ -76,7 +100,7 @@ void setup() {
 }
 
 void draw() {
-	
+  	
 	// find the global max
 	if(scaleMode == "Global") {
 		if(channels.length > 3) {
@@ -103,29 +127,47 @@ void draw() {
 	
 }
 
-void serialEvent(Serial p) {
-	String[] incomingValues = split(p.readString(), ',');
+void clientEvent(Client  myClient) {
+  
+  // Sample JSON data:
+  // {"eSense":{"attention":91,"meditation":41},"eegPower":{"delta":1105014,"theta":211310,"lowAlpha":7730,"highAlpha":68568,"lowBeta":12949,"highBeta":47455,"lowGamma":55770,"highGamma":28247},"poorSignalLevel":0}
+  
+  if (myClient.available() > 0) {
+  
+    String data = myClient.readString();
+    try {
+      JSONObject json = new JSONObject(data);
+      
+      channels[0].addDataPoint(Integer.parseInt(json.getString("poorSignalLevel")));
+      
+      JSONObject esense = json.getJSONObject("eSense");
+      if (esense != null) {
+        channels[1].addDataPoint(Integer.parseInt(esense.getString("attention")));
+        channels[2].addDataPoint(Integer.parseInt(esense.getString("meditation"))); 
+      }
+      
+      JSONObject eegPower = json.getJSONObject("eegPower");
+      if (eegPower != null) {
+        channels[3].addDataPoint(Integer.parseInt(eegPower.getString("delta")));
+        channels[4].addDataPoint(Integer.parseInt(eegPower.getString("theta"))); 
+        channels[5].addDataPoint(Integer.parseInt(eegPower.getString("lowAlpha")));
+        channels[6].addDataPoint(Integer.parseInt(eegPower.getString("highAlpha")));  
+        channels[7].addDataPoint(Integer.parseInt(eegPower.getString("lowBeta")));
+        channels[8].addDataPoint(Integer.parseInt(eegPower.getString("highBeta")));
+        channels[9].addDataPoint(Integer.parseInt(eegPower.getString("lowGamma")));
+        channels[10].addDataPoint(Integer.parseInt(eegPower.getString("highGamma")));
+      }
+      
+      packetCount++;
+  
+      
+    }
+    catch (JSONException e) {
+      println ("There was an error parsing the JSONObject." + e);
+    };
+  
+  }
 
-	println(incomingValues);
-
-	// Add the data to the logs
-	if (incomingValues.length > 1) {
-		packetCount++;
-		
-		// Wait till the third packet or so to start recording to avoid initialization garbage.
-		if(packetCount > 3) {
-			for (int i = 0; i < incomingValues.length; i++) {
-				int newValue = Integer.parseInt(incomingValues[i].trim());
-		
-				// Zero the EEG power values if we don't have a signal.
-				// Can be useful to leave them in for development.
-				if((Integer.parseInt(incomingValues[0]) == 200) && (i > 2)) newValue = 0;
-
-				channels[i].addDataPoint(newValue);
-			}
-		}
-		
-	}
 }
 
 
