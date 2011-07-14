@@ -1,4 +1,6 @@
-# Author: Eric Blue - http://eric-blue.com
+# Author: Eric Blue
+# 	url   = http://eric-blue.com/2011/07/13/neurosky-brainwave-visualizer/
+#   email = ericblue76 (at) gmail (dot) com
 # Project: Neurosky Brainwave Visualizer
 
 [Overview]
@@ -37,17 +39,37 @@ To allow other hosts to connect and run Processing, run ReplayTCP (http://www.dl
 OR, use netcat (windows or mac) to port forward (clients can now connect to port 13855).  
 Ex:  nc -l -p 13855 -c ' nc localhost 13854'
 	 
-[Required Libaries]
+[Required Libraries]
 
 The following required libraries are included:
 
-- ControlP5
+- ControlP5 (See http://www.sojamo.de/libraries/controlP5/)
 - JSON (See http://www.blprnt.com/processing/json.zip)
+
+Make sure to unzip and include under your normal 'sketchbook' libraries folder.  Example directory structure:
+
+	/usr/local/processing/libraries/
+	|-- controlP5
+	|   `-- library
+	|       `-- controlP5.jar
+	|-- json
+	|   `-- library
+	|       `-- json.jar
+
 
 [Binaries]
 
-Binaries were creating using Processing's app builder (platforms = windows, mac & linux)
+Binaries were created using Processing's app builder (platforms = windows, mac & linux)
 
 [Todo]
 - Re-visit previous todo from original code
 - Add ability to record data (CSV, etc.)
+
+[Credits]
+
+This code was inspired by the 'How to Hack Toy EEGs' article and forked from 
+kitschpatrol (https://github.com/kitschpatrol/Processing-Brain-Grapher).
+- Original Processing code from
+	Eric Mika, Arturo Vidich and Sofy Yuditskaya (http://frontiernerds.com)
+- Integration with Neurosky Thinkgear Socket Protocol from
+    Eric Blue (http://eric-blue.com)
