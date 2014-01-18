@@ -8,6 +8,7 @@ class ConnectionLight {
   int badColor = color(255, 255, 0);
   int noColor = color(255, 0, 0);
   Textlabel label;
+  Textlabel packetsRecievedLabel;
 
   ConnectionLight(int _x, int _y, int _diameter) {
     x = _x;
@@ -15,9 +16,13 @@ class ConnectionLight {
     diameter = _diameter;
 
     // Set up the text label
-    label = new Textlabel(controlP5, "CONNECTION QUALITY", 32, 6, 60, 30);
+    label = new Textlabel(controlP5, "CONNECTION QUALITY", 32, 11, 200, 30);
     label.setMultiline(true);	
     label.setColorValue(color(0));
+    
+    packetsRecievedLabel = new Textlabel(controlP5, "PACKETS RECEIVED: 0", 5, 35, 200, 30);
+    packetsRecievedLabel.setMultiline(false);  
+    packetsRecievedLabel.setColorValue(color(0));    
   }
 
   void update() {
@@ -32,6 +37,9 @@ class ConnectionLight {
     if (latestConnectionValue == 200) currentColor = noColor;
     if (latestConnectionValue < 200) currentColor = badColor;
     if (latestConnectionValue == 00) currentColor = goodColor;
+    
+    packetsRecievedLabel.setText("PACKETS RECIEVED: " + packetCount);
+    
   }
 
   void draw() {
@@ -40,14 +48,15 @@ class ConnectionLight {
 
     noStroke();
     fill(255, 150);
-    rect(0, 0, 95, 28);
+    rect(0, 0, 132, 50);
 
     noStroke();
     fill(currentColor);
     ellipseMode(CORNER);
     ellipse(5, 4, diameter, diameter);
 
-    label.draw(); 		
+    label.draw();
+   packetsRecievedLabel.draw(); 		
     popMatrix();
   }
 }

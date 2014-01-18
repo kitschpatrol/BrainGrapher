@@ -83,7 +83,7 @@ void setup() {
   graph = new Graph(0, 0, width, height / 2);
 
   // Set yup the connection light
-  connectionLight = new ConnectionLight(width - 105, 10, 20);
+  connectionLight = new ConnectionLight(width - 140, 10, 20);
 }
 
 void draw() {
