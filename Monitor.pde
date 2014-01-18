@@ -18,7 +18,7 @@ class Monitor {
     backgroundColor = color(255);
 
     // Create GUI
-    showGraph = controlP5.addCheckBox("showGraph" + sourceChannel.name, x + 16, y + 34);
+    showGraph = controlP5.addCheckBox("showGraph" + sourceChannel.name, x + 6, y + 18);
     showGraph.addItem("GRAPH" + sourceChannel.name, 0);
     showGraph.activate(0);
     showGraph.setColorForeground(sourceChannel.drawColor);
@@ -28,8 +28,7 @@ class Monitor {
     toggle = showGraph.getItem(0);
     toggle.setLabel("GRAPH"); 
 
-    label = new Textlabel(controlP5, sourceChannel.name, x + 16, y + 16);
-    label.setFont(ControlP5.grixel);
+    label = new Textlabel(controlP5, sourceChannel.name.toUpperCase(), x + 2, y + 5);
     label.setColorValue(0);
   }
 

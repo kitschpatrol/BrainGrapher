@@ -15,9 +15,8 @@ class ConnectionLight {
     diameter = _diameter;
 
     // Set up the text label
-    label = new Textlabel(controlP5, "CONNECTION QUALITY", 32, 6, 50, 20);
+    label = new Textlabel(controlP5, "CONNECTION QUALITY", 32, 6, 60, 30);
     label.setMultiline(true);	
-    label.setFont(ControlP5.standard58);
     label.setColorValue(color(0));
   }
 
@@ -41,7 +40,7 @@ class ConnectionLight {
 
     noStroke();
     fill(255, 150);
-    rect(0, 0, 88, 28);
+    rect(0, 0, 95, 28);
 
     noStroke();
     fill(currentColor);

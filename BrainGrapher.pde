@@ -4,13 +4,12 @@
 // See http://frontiernerds.com/brain-hack for a tutorial on getting started with the Arduino Brain Library and this Processing Brain Grapher.
 
 // Latest source code is on https://github.com/kitschpatrol/Processing-Brain-Grapher
-// Created by Eric Mika in Fall 2010, last update Spring 2012
+// Created by Eric Mika in Fall 2010, updates Spring 2012 and again in early 2014.
 
 import processing.serial.*;
 import controlP5.*;
 
 ControlP5 controlP5;
-ControlFont font;
 
 Serial serial;
 
@@ -43,7 +42,6 @@ void setup() {
   controlP5.disableShortcuts();	
   controlP5.disableMouseWheel();
   controlP5.setMoveable(false);
-  font = new ControlFont(createFont("DIN-MediumAlternate", 12), 12);
 
   // Create the channel objects
   channels[0] = new Channel("Signal Quality", color(0), "");

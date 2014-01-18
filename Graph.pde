@@ -35,16 +35,19 @@ class Graph {
     renderModeRadio.setColorForeground(color(255));
     renderModeRadio.setColorActive(color(0));
     renderModeRadio.setColorBackground(color(180));
+    renderModeRadio.setSpacingRow(4);    
     renderModeRadio.addItem("Lines", 1);
     renderModeRadio.addItem("Curves", 2);
     renderModeRadio.addItem("Shaded", 3);
-    renderModeRadio.addItem("Triangles", 4);			
+    renderModeRadio.addItem("Triangles", 4);
+    			
     renderModeRadio.activate(0);
 
     scaleRadio = controlP5.addRadioButton("SCALE MODE", 104, 36);
     scaleRadio.setColorForeground(color(255));
     scaleRadio.setColorActive(color(0));
     scaleRadio.setColorBackground(color(180));
+    scaleRadio.setSpacingRow(4);    
     scaleRadio.addItem("Local Maximum", 1);
     scaleRadio.addItem("Global Maximum", 2);		
     scaleRadio.activate(0);
