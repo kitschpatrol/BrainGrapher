@@ -18,17 +18,17 @@ class Monitor {
     backgroundColor = color(255);
 
     // Create GUI
-    showGraph = controlP5.addCheckBox("showGraph" + sourceChannel.name, x + 6, y + 18);
+    showGraph = controlP5.addCheckBox("showGraph" + sourceChannel.name, x + 16, y + 32);
     showGraph.addItem("GRAPH" + sourceChannel.name, 0);
-    showGraph.activate(0);
+    showGraph.activate(1);
     showGraph.setColorForeground(sourceChannel.drawColor);
-    showGraph.setColorActive(color(0));
-    showGraph.setColorBackground(color(180));
+    showGraph.setColorActive(color(180));
+    showGraph.setColorBackground(color(0));
 
     toggle = showGraph.getItem(0);
     toggle.setLabel("GRAPH"); 
 
-    label = new Textlabel(controlP5, sourceChannel.name.toUpperCase(), x + 2, y + 5);
+    label = new Textlabel(controlP5, sourceChannel.name.toUpperCase(), x + 12, y + 15);
     label.setColorValue(0);
   }
 
@@ -70,7 +70,7 @@ class Monitor {
 
     // Draw the checkbox matte
     noStroke();
-    fill(255, 150);     
+    fill(240, 150);     
     rect(10, 10, w - 20, 40);
 
     popMatrix();

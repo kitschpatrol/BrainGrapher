@@ -31,8 +31,13 @@ void setup() {
 
   // Set up serial connection
   println("Find your Arduino in the list below, note its [index]:\n");
-  println(Serial.list());
-  serial = new Serial(this, Serial.list()[0], 9600);    
+  
+  for (int i = 0; i < Serial.list().length; i++) {
+    println("[" + i + "] " + Serial.list()[i]);
+  }
+  
+  // Put the index found above here:
+  serial = new Serial(this, Serial.list()[5], 9600);    
   serial.bufferUntil(10);
 
   // Set up the ControlP5 knobs and dials
@@ -78,7 +83,7 @@ void setup() {
   graph = new Graph(0, 0, width, height / 2);
 
   // Set yup the connection light
-  connectionLight = new ConnectionLight(width - 98, 10, 20);
+  connectionLight = new ConnectionLight(width - 105, 10, 20);
 }
 
 void draw() {
@@ -110,7 +115,12 @@ void draw() {
 void serialEvent(Serial p) {
   // Split incoming packet on commas
   // See https://github.com/kitschpatrol/Arduino-Brain-Library/blob/master/README for information on the CSV packet format
-  String[] incomingValues = split(p.readString(), ',');
+  
+  String incomingString = p.readString().trim();
+  print("Received string over serial: ");
+  println(incomingString);  
+  
+  String[] incomingValues = split(incomingString, ',');
 
   // Verify that the packet looks legit
   if (incomingValues.length > 1) {
@@ -118,17 +128,22 @@ void serialEvent(Serial p) {
 
     // Wait till the third packet or so to start recording to avoid initialization garbage.
     if (packetCount > 3) {
+      
       for (int i = 0; i < incomingValues.length; i++) {
-        int newValue = Integer.parseInt(incomingValues[i].trim());
+        String stringValue = incomingValues[i].trim();
+
+      int newValue = Integer.parseInt(stringValue);
 
         // Zero the EEG power values if we don't have a signal.
         // Can be useful to leave them in for development.
-        if ((Integer.parseInt(incomingValues[0]) == 200) && (i > 2)) newValue = 0;
+        if ((Integer.parseInt(incomingValues[0]) == 200) && (i > 2)) {
+          newValue = 0;
+        }
 
         channels[i].addDataPoint(newValue);
       }
     }
-  }
+  } 
 }
 
 
