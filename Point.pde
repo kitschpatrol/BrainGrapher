@@ -9,4 +9,3 @@ class Point {
     value = _value;
   }
 }
-

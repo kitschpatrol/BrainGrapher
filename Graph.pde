@@ -40,7 +40,7 @@ class Graph {
     renderModeRadio.addItem("Curves", 2);
     renderModeRadio.addItem("Shaded", 3);
     renderModeRadio.addItem("Triangles", 4);
-    			
+                
     renderModeRadio.activate(0);
 
     scaleRadio = controlP5.addRadioButton("SCALE MODE", 104, 36);
@@ -49,7 +49,7 @@ class Graph {
     scaleRadio.setColorBackground(color(180));
     scaleRadio.setSpacingRow(4);    
     scaleRadio.addItem("Local Maximum", 1);
-    scaleRadio.addItem("Global Maximum", 2);		
+    scaleRadio.addItem("Global Maximum", 2);        
     scaleRadio.activate(0);
   }
 
@@ -112,7 +112,7 @@ class Graph {
     stroke(255);
 
     if (scrollGrid) {
-      // Start from the first whole second and work right			
+      // Start from the first whole second and work right           
       gridTime = (rightTime / (long)(1000 * gridSeconds)) * (long)(1000 * gridSeconds);
     }
     else {
@@ -133,8 +133,8 @@ class Graph {
     }
 
     // Draw each channel
-    noFill();				
-    if (renderMode == "Shaded" || renderMode == "Triangles") noStroke();		
+    noFill();               
+    if (renderMode == "Shaded" || renderMode == "Triangles") noStroke();        
     if (renderMode == "Curves" || renderMode == "Lines") strokeWeight(2);
 
     for (int i = 0; i < channels.length; i++) {
@@ -168,7 +168,7 @@ class Graph {
             int pointY = 0;
 
             if ((scaleMode == "Global") && (i > 2)) {
-              // Global scale					
+              // Global scale                   
               pointY = (int)map(thisPoint.value, 0, globalMax, h, 0);
             }
             else {

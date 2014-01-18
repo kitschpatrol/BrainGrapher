@@ -32,14 +32,14 @@ void setup() {
   // Set up serial connection
   println("Find your Arduino in the list below, note its [index]:\n");
   println(Serial.list());
-  serial = new Serial(this, Serial.list()[0], 9600);	
+  serial = new Serial(this, Serial.list()[0], 9600);    
   serial.bufferUntil(10);
 
   // Set up the ControlP5 knobs and dials
   controlP5 = new ControlP5(this);
-  controlP5.setColorLabel(color(0));	
+  controlP5.setColorLabel(color(0));    
   controlP5.setColorBackground(color(0));
-  controlP5.disableShortcuts();	
+  controlP5.disableShortcuts(); 
   controlP5.disableMouseWheel();
   controlP5.setMoveable(false);
 
