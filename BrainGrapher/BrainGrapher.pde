@@ -37,7 +37,7 @@ void setup() {
   }
   
   // Put the index found above here:
-  serial = new Serial(this, Serial.list()[5], 9600);    
+  serial = new Serial(this, Serial.list()[0], 9600);    
   serial.bufferUntil(10);
 
   // Set up the ControlP5 knobs and dials
