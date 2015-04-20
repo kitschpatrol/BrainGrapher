@@ -25,5 +25,6 @@ Created by Eric Mika at NYU ITP in the spring of 2010. Revised in Spring 2012 to
 
 ####Contact
 Eric Mika  
-ermika@gmail.com  
-@kitschpatrol
+eric@ericmika.com  
+[https://github.com/kitschpatrol](https://github.com/kitschpatrol)  
+[http://frontiernerds.com](http://frontiernerds.com)  
