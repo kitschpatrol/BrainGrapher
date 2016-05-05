@@ -4,7 +4,7 @@
 // See http://frontiernerds.com/brain-hack for a tutorial on getting started with the Arduino Brain Library and this Processing Brain Grapher.
 
 // Latest source code is on https://github.com/kitschpatrol/Processing-Brain-Grapher
-// Created by Eric Mika in Fall 2010, updates Spring 2012 and again in early 2014.
+// Created by Eric Mika in Fall 2010, updates Spring 2012, early 2014, and Spring 2016.
 
 import processing.serial.*;
 import controlP5.*;
@@ -27,7 +27,7 @@ void setup() {
   size(1024, 768);
   frameRate(60);
   smooth();
-  frame.setTitle("Processing Brain Grapher");  
+  surface.setTitle("Processing Brain Grapher");  
 
   // Set up serial connection
   println("Find your Arduino in the list below, note its [index]:\n");
@@ -37,15 +37,18 @@ void setup() {
   }
   
   // Put the index found above here:
-  serial = new Serial(this, Serial.list()[0], 9600);    
+  serial = new Serial(this, Serial.list()[0], 9600);
+
   serial.bufferUntil(10);
 
   // Set up the ControlP5 knobs and dials
   controlP5 = new ControlP5(this);
-  controlP5.setColorLabel(color(0));    
+  
+  controlP5.setColorValueLabel(color(0));
+  controlP5.setColorCaptionLabel(color(0)); 
   controlP5.setColorBackground(color(0));
   controlP5.disableShortcuts(); 
-  controlP5.disableMouseWheel();
+  controlP5.setMouseWheelRotation(0);
   controlP5.setMoveable(false);
 
   // Create the channel objects

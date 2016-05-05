@@ -33,7 +33,7 @@ class Monitor {
   }
 
   void update() {
-    sourceChannel.graphMe = (showGraph.getItem(0).value() == 0);
+    sourceChannel.graphMe = (showGraph.getItem(0).getValue() == 0);
   }
 
   void draw() {

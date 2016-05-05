@@ -60,4 +60,3 @@ class ConnectionLight {
     popMatrix();
   }
 }
-
