@@ -1,6 +1,9 @@
 ##Processing Brain Grapher
 
 ####Overview
+
+<img width="500" src="screenshot.jpg" />
+
 This is a simple Processing application for graphing changes in brain waves over time. It's designed to read data from a hacked MindFlex EEG headset connected via USB.
 
 It's mostly a proof of concept, demonstrating how to parse serial packets from the Arduino Brain Library, monitor signal strength, etc.
